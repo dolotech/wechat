@@ -6,9 +6,11 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"flag"
 )
 
 func main() {
+	flag.Parse()
 	// get web server root path
 	cur_dir := filepath.Dir(os.Args[0])
 	public_dir := filepath.Join(cur_dir, "public")

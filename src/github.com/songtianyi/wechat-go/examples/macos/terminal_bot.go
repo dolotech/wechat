@@ -15,9 +15,11 @@ import (
 	"github.com/songtianyi/wechat-go/plugins/wxweb/youdao"
 	"github.com/songtianyi/wechat-go/wxweb"
 	"time"
+	"flag"
 )
 
 func main() {
+	flag.Parse()
 	// create session
 	session, err := wxweb.CreateSession(nil, nil, wxweb.TERMINAL_MODE)
 	if err != nil {

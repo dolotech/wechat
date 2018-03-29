@@ -234,22 +234,20 @@ func (s *Session) SetCookies(cookies []*http.Cookie) {
 
 // LoginAndServe: login wechat web and enter message receiving loop
 func (s *Session) LoginAndServe(useCache bool) error {
-
-	var (
-		err error
-	)
-
+	var err error
 	if !useCache {
 		if s.GetCookies() != nil {
 			// confirmWaiter
 		}
 
 		if err := s.scanWaiter(); err != nil {
+			glog.Errorln(err)
 			return err
 		}
 		var cookies []*http.Cookie
 		// update cookies
 		if cookies, err = s.Api.WebNewLoginPage(s.WxWebCommon, s.WxWebXcg, s.WxWebCommon.RedirectUri); err != nil {
+			glog.Errorln(err)
 			return err
 		}
 		s.SetCookies(cookies)
@@ -258,38 +256,46 @@ func (s *Session) LoginAndServe(useCache bool) error {
 
 	jb, err := s.Api.WebWxInit(s.WxWebCommon, s.WxWebXcg)
 	if err != nil {
+		glog.Errorln(err)
 		return err
 	}
 
 	jc, err := rrconfig.LoadJsonConfigFromBytes(jb)
 	if err != nil {
+		glog.Errorf("%v %v ",err,jb)
 		return err
 	}
 
 	s.SynKeyList, err = GetSyncKeyListFromJc(jc)
 	if err != nil {
+		glog.Errorln(err)
 		return err
 	}
 	s.Bot, _ = GetUserInfoFromJc(jc)
 	glog.Info(s.Bot)
 	ret, err := s.Api.WebWxStatusNotify(s.WxWebCommon, s.WxWebXcg, s.Bot)
 	if err != nil {
+		glog.Errorln(err)
 		return err
 	}
 	if ret != 0 {
+		glog.Errorln(err)
 		return fmt.Errorf("WebWxStatusNotify fail, %d", ret)
 	}
 
 	cb, err := s.Api.WebWxGetContact(s.WxWebCommon, s.WxWebXcg, s.GetCookies())
 	if err != nil {
+		glog.Errorln(err)
 		return err
 	}
 
 	s.Cm, err = CreateContactManagerFromBytes(cb)
 	if err != nil {
+		glog.Errorln(err)
 		return err
 	}
 
+	glog.Infoln(s.Bot)
 	// for v2
 	s.Cm.AddUser(s.Bot)
 

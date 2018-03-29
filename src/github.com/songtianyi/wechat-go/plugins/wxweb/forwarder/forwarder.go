@@ -69,7 +69,7 @@ func forward(session *wxweb.Session, msg *wxweb.ReceivedMessage) {
 	}
 	mm, err := wxweb.CreateMemberManagerFromGroupContact(session, contact)
 	if err != nil {
-		glog.Debug(err)
+		glog.Error(err)
 		return
 	}
 	who := mm.GetContactByUserName(msg.Who)

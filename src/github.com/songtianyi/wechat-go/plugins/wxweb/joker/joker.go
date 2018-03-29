@@ -67,7 +67,7 @@ func listenCmd(session *wxweb.Session, msg *wxweb.ReceivedMessage) {
 	if !strings.Contains(msg.Content, "笑话") {
 		return
 	}
-	glog.Debug("jokeQueue length:", len(jokeQueue))
+	glog.Error("jokeQueue length:", len(jokeQueue))
 	select {
 	case <-time.After(time.Second * 5):
 		return

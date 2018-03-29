@@ -63,7 +63,7 @@ func listenCmd(session *wxweb.Session, msg *wxweb.ReceivedMessage) {
 				glog.Error(err)
 				return
 			}
-			glog.Debug(string(b.([]byte)))
+			glog.Error(string(b.([]byte)))
 		}
 	}
 }

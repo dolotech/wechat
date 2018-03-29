@@ -53,5 +53,5 @@ func Register(session *wxweb.Session) {
 // 消息处理函数
 func system(session *wxweb.Session, msg *wxweb.ReceivedMessage) {
 
-	glog.Debug(msg)
+	glog.Error(msg)
 }

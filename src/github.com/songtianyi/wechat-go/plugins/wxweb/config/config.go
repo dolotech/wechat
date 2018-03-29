@@ -46,7 +46,7 @@ func configure(session *wxweb.Session, msg *wxweb.ReceivedMessage) {
 		return
 	}
 	kvp := strings.Split(msg.Content, " ")
-	glog.Debug(kvp)
+	glog.Error(kvp)
 	// command filter
 	if strings.Contains(strings.ToLower(msg.Content), "set config ") {
 		if len(kvp) < 4 {
